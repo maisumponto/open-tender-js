@@ -119,7 +119,9 @@ const makeOrderMsg = (
     const estimate = requestedAt !== 'asap' && seconds ? 'at about' : 'at'
     readableDate =
       requestedAt === 'asap' && firstTime.has_asap
-        ? `in about ${waitTime} minutes`
+        ? waitTime === 0
+          ? 'in a few minutes'
+          : `in about ${waitTime} minutes`
         : makeReadableDateStrFromIso(firstTime.utc, tz, true)
             .replace('Today', 'today')
             .replace('Tomorrow', 'TOMORROW')
@@ -166,10 +168,9 @@ export const makeRevenueCenterMsg = (
   const settings = revenueCenter.settings || revenueCenter
   const { first_times, order_times, wait_times } = settings
   const tz = timezoneMap[revenueCenter.timezone]
-  const st = serviceType === 'WALKIN' ? 'PICKUP' : serviceType
-  const firstTime = first_times ? first_times[st] : null
-  const orderTime = order_times ? order_times[st] : null
-  const waitTime = wait_times ? wait_times[st] : null
+  const firstTime = first_times ? first_times[serviceType] : null
+  const orderTime = order_times ? order_times[serviceType] : null
+  const waitTime = wait_times ? wait_times[serviceType] : null
   const tempClosed = revenueCenter.status === 'CLOSED_TEMPORARILY'
   const statusMsg = !tempClosed ? statusMessages[revenueCenter.status] : null
   const orderMsg =

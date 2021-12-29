@@ -48,13 +48,18 @@ export const minutesLeft = (start, end) => {
 }
 
 export const secondsLeft = (start, end) => {
-  return Math.max(differenceInSeconds(start, end), 0)
+  // return Math.max(differenceInSeconds(start, end), 0)
+  return differenceInSeconds(start, end)
 }
 
 export const secondsToTime = (seconds) => {
-  const mins = Math.floor(seconds / 60)
-  const secs = `${seconds % 60}`.padStart(2, '0')
-  return `${mins}:${secs}`
+  let secs = Math.abs(seconds)
+  const hours = Math.floor(secs / 3600)
+  secs = hours > 0 ? secs % 3600 : secs
+  let mins = Math.floor(secs / 60)
+  mins = hours > 0 ? `${mins}`.padStart(2, '0') : mins
+  const s = `${secs % 60}`.padStart(2, '0')
+  return `${seconds < 0 ? '-' : ''}${hours ? `${hours}:` : ''}${mins}:${s}`
 }
 
 export const timeLeft = (start, end) => {

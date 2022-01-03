@@ -48,8 +48,8 @@ export const minutesLeft = (start, end) => {
 }
 
 export const secondsLeft = (start, end) => {
-  // return Math.max(differenceInSeconds(start, end), 0)
-  return differenceInSeconds(start, end)
+  return Math.max(differenceInSeconds(start, end), 0)
+  // return differenceInSeconds(start, end)
 }
 
 export const secondsToTime = (seconds) => {

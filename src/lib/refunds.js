@@ -1,4 +1,4 @@
-const makeCartLookup = (cart) => {
+export const makeRefundCartLookup = (cart) => {
   const lookup = {}
   cart.forEach((item) => {
     const { line_no, quantity, price_total } = item
@@ -31,7 +31,7 @@ export const makeRefundLookup = (order) => {
     total,
   } = totals
   return {
-    cart: makeCartLookup(cart),
+    cart: makeRefundCartLookup(cart),
     gift_cards: makeAmountsLookup(gift_cards, 'code'),
     surcharges: makeAmountsLookup(surcharges),
     discounts: makeAmountsLookup(discounts),
